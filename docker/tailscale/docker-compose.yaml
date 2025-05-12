@@ -1,0 +1,21 @@
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    hostname: debian_nas
+    environment:
+      - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--hostname=debian_nas
+      - TS_SOCKET=/var/run/tailscale/tailscaled.sock
+    volumes:
+      - ./data/tailscale:/var/lib/tailscale  # Persists state between restarts
+      - /dev/net/tun:/dev/net/tun            # Required for VPN functionality
+      - ./data/tailscale/socket:/var/run/tailscale  # For socket access from other containers
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW        # Added based on official recommendations
+      - SYS_MODULE     # Required for loading kernel modules
+    restart: unless-stopped
+    network_mode: "host"  # Optional, but often useful for Tailscale to properly access the host network
