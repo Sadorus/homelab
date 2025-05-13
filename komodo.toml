@@ -15,6 +15,9 @@ git_account = "Sadorus"
 repo = "Sadorus/homelab"
 run_directory = "docker/tailscale"
 file_paths = ["docker-compose.yaml"]
+environment = """
+TAILSCALE_AUTH_KEY = [[TAILSCALE_AUTH_KEY]]
+"""
 
 ##
 
