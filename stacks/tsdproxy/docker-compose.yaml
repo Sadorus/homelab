@@ -1,0 +1,17 @@
+services:
+  tsdproxy:
+    image: almeidapaulopt/tsdproxy:2
+    container_name: tsdproxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Access to Docker socket
+      - ./data/tsdproxy/data:/data  # Persistent data storage using host folder
+      - ./data/tsdproxy/config:/config  # Configuration directory using host folder
+      - ./data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
+    restart: unless-stopped
+    ports:
+      - "8080:8080"  # TSDProxy dashboard
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - tsdproxy.enable=true  # Enable the dashboard in Tailscale
+      - tsdproxy.name=dash  # Name for the dashboard in Tailscale
