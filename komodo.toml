@@ -6,6 +6,18 @@ enabled = true
 
 ##
 
+[[stack]]
+name = "tailscale"
+[stack.config]
+server = "server-gjwp7"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "docker/tailscale"
+file_paths = ["docker-compose.yaml"]
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
