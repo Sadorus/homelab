@@ -1,5 +1,5 @@
 [[server]]
-name = "server-gjwp7"
+name = "server-mfhae"
 [server.config]
 address = "http://periphery:8120"
 enabled = true
@@ -9,7 +9,7 @@ enabled = true
 [[stack]]
 name = "tailscale"
 [stack.config]
-server = "server-gjwp7"
+server = "server-mfhae"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -24,7 +24,7 @@ TAILSCALE_AUTH_KEY = [[TAILSCALE_AUTH_KEY]]
 [[stack]]
 name = "tsdproxy"
 [stack.config]
-server = "server-gjwp7"
+server = "server-mfhae"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -37,7 +37,7 @@ file_paths = ["docker-compose.yaml"]
 name = "local"
 [builder.config]
 type = "Server"
-params.server_id = "server-gjwp7"
+params.server_id = "server-mfhae"
 
 ##
 
@@ -48,3 +48,4 @@ repo = "Sadorus/homelab"
 git_account = "Sadorus"
 resource_path = ["komodo.toml"]
 managed = true
+delete = true
