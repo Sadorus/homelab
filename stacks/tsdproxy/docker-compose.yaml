@@ -4,8 +4,8 @@ services:
     container_name: tsdproxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Access to Docker socket
-      - ./data/tsdproxy/data:/data  # Persistent data storage using host folder
-      - ./data/tsdproxy/config:/config  # Configuration directory using host folder
+      - ./data:/data  # Persistent data storage using host folder
+      - ./data/config:/config  # Configuration directory using host folder
       - ./data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
     restart: unless-stopped
     ports:
