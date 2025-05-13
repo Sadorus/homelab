@@ -7,7 +7,7 @@ services:
       - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=false
-      - TS_EXTRA_ARGS=--hostname=debian_nas
+      - TS_EXTRA_ARGS=--hostname=debian-nas
       - TS_SOCKET=/var/run/tailscale/tailscaled.sock
     volumes:
       - ./data/tailscale:/var/lib/tailscale  # Persists state between restarts
