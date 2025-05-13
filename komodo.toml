@@ -28,7 +28,7 @@ server = "server-gjwp7"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
-run_directory = "stacks/tailscale"
+run_directory = "stacks/tsdproxy"
 file_paths = ["docker-compose.yaml"]
 
 ##
