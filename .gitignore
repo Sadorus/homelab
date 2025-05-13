@@ -1,7 +1,0 @@
-# homelab/.gitignore
-
-# Ignore all .env files
-docker/**/.env
-
-# Ignore data directories
-docker/**/data/
