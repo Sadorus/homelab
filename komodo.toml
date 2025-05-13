@@ -13,11 +13,23 @@ server = "server-gjwp7"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
-run_directory = "docker/tailscale"
+run_directory = "stacks/tailscale"
 file_paths = ["docker-compose.yaml"]
 environment = """
 TAILSCALE_AUTH_KEY = [[TAILSCALE_AUTH_KEY]]
 """
+
+##
+
+[[stack]]
+name = "tsdproxy"
+[stack.config]
+server = "server-gjwp7"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/tailscale"
+file_paths = ["docker-compose.yaml"]
 
 ##
 
