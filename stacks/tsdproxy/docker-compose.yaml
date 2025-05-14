@@ -4,9 +4,9 @@ services:
     container_name: tsdproxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Access to Docker socket
-      - ./data:/data  # Persistent data storage using host folder
-      - ./data/config:/config  # Configuration directory using host folder
-      - ./data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
+      - /srv/komodo/data/tsdproxy/data:/data  # Persistent data storage using host folder
+      - /srv/komodo/data/tsdproxy/config:/config  # Configuration directory using host folder
+      - /srv/komodo/data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
     restart: unless-stopped
     ports:
       - "8080:8080"  # TSDProxy dashboard
