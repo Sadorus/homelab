@@ -7,6 +7,18 @@ enabled = true
 ##
 
 [[stack]]
+name = "glance"
+[stack.config]
+server = "server-mfhae"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/glance"
+file_paths = ["docker-compose.yaml"]
+
+##
+
+[[stack]]
 name = "tailscale"
 [stack.config]
 server = "server-mfhae"
