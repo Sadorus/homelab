@@ -1,16 +1,13 @@
-## Add your compose file here
 services:
-  hello_world:
-    image: hello-world
-    # networks:
-    #   - default
-    # ports:
-    #   - 3000:3000
-    # volumes:
-    #   - data:/data
-
-# networks:
-#   default: {}
-
-# volumes:
-#   data:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    volumes:
+      - /srv/komodo/data/glance/config:/app/config
+      - /srv/komodo/data/glance/assets:/app/assets
+      # Optionally, also mount docker socket if you want to use the docker containers widget
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 8081:8080
+    env_file: .env
