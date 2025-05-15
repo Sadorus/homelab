@@ -9,7 +9,7 @@ services:
       - /srv/komodo/data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
     restart: unless-stopped
     ports:
-      - "8082:8082"  # TSDProxy dashboard
+      - "8080:8080"  # TSDProxy dashboard
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
