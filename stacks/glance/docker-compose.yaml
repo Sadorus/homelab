@@ -6,10 +6,16 @@ services:
     volumes:
       - /srv/komodo/data/glance/config:/app/config
       - /srv/komodo/data/glance/assets:/app/assets
-      # Optionally, also mount docker socket if you want to use the docker containers widget
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8081:8080
     labels:
-      - tsdproxy.enable=true  # Enable the dashboard in Tailscale
-      - tsdproxy.name=glance  # Name for the dashboard in Tailscale 
+      - tsdproxy.enable=true
+      - tsdproxy.name=glance
+      - tsdproxy.port=8080  # Specify the internal port explicitly
+    networks:
+      - tailnet
+
+networks:
+  tailnet:
+    external: true
