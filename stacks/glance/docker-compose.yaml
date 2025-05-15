@@ -7,13 +7,14 @@ services:
       - /srv/komodo/data/glance/config:/app/config
       - /srv/komodo/data/glance/assets:/app/assets
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    expose:
-      - 8080
+    ports:
+      - 8082:8080  # Host port 8082 maps to container port 8080
     labels:
-      - tsdproxy.enable=true
-      - tsdproxy.name=glance
-      - tsdproxy.port=8080
-      - tsdproxy.ssl=true
+      - "tsdproxy.enable=true"                # Enable this container with TSDProxy
+      - "tsdproxy.name=glance"                # Set the name in Tailscale
+      - "tsdproxy.port=8080"                  # The internal port the service is running on
+      - "tsdproxy.hostname=glance"            # Optional: Set a specific hostname
+      - "tsdproxy.https=true"                 # Use HTTPS for Tailscale connections
     networks:
       - tailnet
 
