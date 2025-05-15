@@ -12,7 +12,8 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=glance
-      - tsdproxy.port=8080
+      - tsdproxy.container_port=8080  # Explicitly specify the internal port
+      - tsdproxy.host_port=8082  
       - tsdproxy.ssl=true
     networks:
       - tailnet
