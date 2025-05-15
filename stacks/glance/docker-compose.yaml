@@ -12,6 +12,7 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=glance
+      - tsdproxy.port=8080
     networks:
       - tailnet
 
