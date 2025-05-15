@@ -15,3 +15,9 @@ services:
     labels:
       - tsdproxy.enable=true  # Enable the dashboard in Tailscale
       - tsdproxy.name=dash  # Name for the dashboard in Tailscale
+    networks:
+      - tailnet
+
+networks:
+  tailnet:
+    external: true
