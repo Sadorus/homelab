@@ -20,6 +20,7 @@ file_paths = ["docker-compose.yaml"]
 
 [[stack]]
 name = "tailscale"
+tags = ["Proxy"]
 [stack.config]
 server = "server-mfhae"
 poll_for_updates = true
@@ -35,6 +36,7 @@ TAILSCALE_AUTH_KEY = [[TAILSCALE_AUTH_KEY]]
 
 [[stack]]
 name = "tsdproxy"
+tags = ["Proxy"]
 [stack.config]
 server = "server-mfhae"
 poll_for_updates = true
