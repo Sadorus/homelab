@@ -23,7 +23,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /srv/komodo/data/beszel/socket:/beszel_socket
     environment:
-      LISTEN: 45876
+      LISTEN: /beszel_socket/beszel.sock
       KEY: $KEY
 
 networks:
