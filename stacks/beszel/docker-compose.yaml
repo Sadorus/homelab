@@ -8,7 +8,6 @@ services:
       - /srv/komodo/data/beszel/socket:/beszel_socket
     ports:
       - 8090:8090
-    user: $PUID
     labels:
       - "tsdproxy.enable=true"                # Enable this container with TSDProxy
       - "tsdproxy.name=beszel"                # Set the name in Tailscale
