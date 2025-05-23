@@ -1,5 +1,5 @@
 [[server]]
-name = "server-mfhae"
+name = "nas"
 [server.config]
 address = "http://periphery:8120"
 enabled = true
@@ -9,7 +9,7 @@ enabled = true
 [[stack]]
 name = "beszel"
 [stack.config]
-server = "server-mfhae"
+server = "nas"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -25,7 +25,7 @@ KEY = [[KEY]]
 [[stack]]
 name = "glance"
 [stack.config]
-server = "server-mfhae"
+server = "nas"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -38,7 +38,7 @@ file_paths = ["docker-compose.yaml"]
 name = "tailscale"
 tags = ["Proxy"]
 [stack.config]
-server = "server-mfhae"
+server = "nas"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -54,7 +54,7 @@ TAILSCALE_AUTH_KEY = [[TAILSCALE_AUTH_KEY]]
 name = "tsdproxy"
 tags = ["Proxy"]
 [stack.config]
-server = "server-mfhae"
+server = "nas"
 poll_for_updates = true
 git_account = "Sadorus"
 repo = "Sadorus/homelab"
@@ -67,7 +67,7 @@ file_paths = ["docker-compose.yaml"]
 name = "local"
 [builder.config]
 type = "Server"
-params.server_id = "server-mfhae"
+params.server_id = "nas"
 
 ##
 
