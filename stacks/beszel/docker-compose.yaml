@@ -9,12 +9,22 @@ services:
     ports:
       - 8090:8090
     labels:
-      - "tsdproxy.enable=true"                # Enable this container with TSDProxy
-      - "tsdproxy.name=beszel"                # Set the name in Tailscale
+      - "tsdproxy.enable=true"
+      - "tsdproxy.name=beszel"
     networks:
       - tailnet
+
+  beszel-agent:
+    image: "henrygd/beszel-agent"
+    container_name: "beszel-agent"
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      KEY: $KEY
 
 networks:
   tailnet:
     external: true
-  
