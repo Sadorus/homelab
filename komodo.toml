@@ -7,6 +7,22 @@ enabled = true
 ##
 
 [[stack]]
+name = "beszel"
+[stack.config]
+server = "server-mfhae"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/beszel"
+file_paths = ["docker-compose.yaml"]
+environment = """
+PUID = [[PUID]]
+KEY = [[KEY]]
+"""
+
+##
+
+[[stack]]
 name = "glance"
 [stack.config]
 server = "server-mfhae"
