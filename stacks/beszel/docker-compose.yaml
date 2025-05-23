@@ -27,7 +27,6 @@ services:
     environment:
       LISTEN: /beszel_socket/beszel.sock
       KEY: $KEY
-      LOG_LEVEL: debug
 
 networks:
   tailnet:
