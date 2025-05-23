@@ -1,0 +1,21 @@
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    volumes:
+      - /srv/komodo/data/beszel:/beszel_data
+      - /srv/komodo/data/beszel/socket:/beszel_socket
+    ports:
+      - 8082:8080  # Host port 8082 maps to container port 8080
+    user: $PUID
+    labels:
+      - "tsdproxy.enable=true"                # Enable this container with TSDProxy
+      - "tsdproxy.name=beszel"                # Set the name in Tailscale
+    networks:
+      - tailnet
+
+networks:
+  tailnet:
+    external: true
+  
