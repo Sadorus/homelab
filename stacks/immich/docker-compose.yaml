@@ -37,6 +37,7 @@ services:
       - tsdproxy.name=immich
     networks:
       - tailnet
+      - default
 
   immich-machine-learning:
     container_name: immich_machine_learning
