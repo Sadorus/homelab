@@ -23,6 +23,18 @@ KEY = [[KEY]]
 ##
 
 [[stack]]
+name = "bill-tracker"
+[stack.config]
+server = "nas"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/bill-tracker"
+file_paths = ["docker-compose.yaml"]
+
+##
+
+[[stack]]
 name = "glance"
 [stack.config]
 server = "nas"
@@ -31,6 +43,39 @@ git_account = "Sadorus"
 repo = "Sadorus/homelab"
 run_directory = "stacks/glance"
 file_paths = ["docker-compose.yaml"]
+
+##
+
+[[stack]]
+name = "immich"
+[stack.config]
+server = "nas"
+auto_update = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/immich"
+file_paths = ["docker-compose.yaml"]
+environment = """
+UPLOAD_LOCATION = [[UPLOAD_LOCATION]]
+
+# The location where your database files are stored. Network shares are not supported for the database
+DB_DATA_LOCATION = [[DB_DATA_LOCATION]]
+
+# To set a timezone, uncomment the next line and change Etc/UTC to a TZ identifier from this list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+# TZ=Etc/UTC
+
+# The Immich version to use. You can pin this to a specific version like "v1.71.0"
+IMMICH_VERSION = [[IMMICH_VERSION]]
+
+# Connection secret for postgres. You should change it to a random password
+# Please use only the characters `A-Za-z0-9`, without special characters or spaces
+DB_PASSWORD = [[DB_PASSWORD]]
+
+# The values below this line do not need to be changed
+###################################################################################
+DB_USERNAME = [[DB_USERNAME]]
+DB_DATABASE_NAME = [[DB_DATABASE_NAME]]
+"""
 
 ##
 
