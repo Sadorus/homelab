@@ -1,0 +1,33 @@
+services:
+  bill-reminder:
+    # Use your published Docker Hub image
+    image: sadorus/bill-tracker:latest
+    container_name: bill-tracker
+    restart: unless-stopped
+    ports:
+      - "3000:3002"  # Map host port 3000 to container port 3002
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    networks:
+      - tailnet
+    healthcheck:
+      # Updated health check to use the correct API endpoint on port 3002
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - /srv/komodo/data/bill-tracker:/app/data
+    labels:
+      - "tsdproxy.enable=true"                # Enable this container with TSDProxy
+      - "tsdproxy.name=bill-tracker"                # Set the name in Tailscale
+
+networks:
+  tailnet:
+    external: true
+
+# Uncomment if you need persistent storage
+# volumes:
+#   bill-reminder-data:
