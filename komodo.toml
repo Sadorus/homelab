@@ -47,6 +47,26 @@ file_paths = ["docker-compose.yaml"]
 ##
 
 [[stack]]
+name = "gluetun"
+[stack.config]
+server = "nas"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/gluetun"
+file_paths = ["docker-compose.yaml"]
+environment = """
+VPN_SERVICE_PROVIDER = [[VPN_SERVICE_PROVIDER]]
+VPN_TYPE = [[VPN_TYPE]]
+OPENVPN_USER = [[OPENVPN_USER]]
+OPENVPN_PASSWORD = [[OPENVPN_PASSWORD]]
+SERVER_COUNTRIES = [[SERVER_COUNTRIES]]
+TZ = [[TZ]]
+"""
+
+##
+
+[[stack]]
 name = "immich"
 [stack.config]
 server = "nas"
