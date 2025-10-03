@@ -1,0 +1,150 @@
+services:
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+    volumes:
+      - /srv/komodo/data/arr/radarr:/config
+      - $MEDIADIR:/media
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+    volumes:
+      - /srv/komodo/data/arr/sonarr:/config
+      - $MEDIADIR:/media
+
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+    volumes:
+      - /srv/komodo/data/arr/prowlarr:/config
+
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+    volumes:
+      - /srv/komodo/data/arr/bazarr:/config
+      - $MEDIADIR:/media
+
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    restart: unless-stopped
+    #logging:
+    #  driver: json-file
+    #  options:
+    #    max-file: ${DOCKERLOGGING_MAXFILE}
+    #    max-size: ${DOCKERLOGGING_MAXSIZE}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /srv/komodo/data/arr/autobrr/config:/config
+    ports:
+      - 7474:7474
+
+  decluttarr:
+    image: ghcr.io/manimatter/decluttarr:latest
+    container_name: decluttarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /srv/komodo/data/arr/decluttarr/config.yaml:/app/config/config.yaml
+      # - $DOCKERDIR/appdata/decluttarr/logs:/app/logs # Uncomment to get logs in text file, too
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:latest
+    container_name: huntarr
+    restart: always
+    ports:
+      - "9705:9705"
+    volumes:
+      - /srv/komodo/data/arr/huntarr/config:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+    - 8096:8096
+    volumes:
+    - /srv/komodo/data/arr/jellyfin/config:/config
+    - /srv/komodo/data/arr/jellyfin/cache:/cache
+    - $MEDIADIR:/media:ro
+    restart: 'unless-stopped'
+    devices:
+    - /dev/dri/renderD128:/dev/dri/renderD128
+    - /dev/dri/card0:/dev/dri/card0
+    environment:
+    - LOG_LEVEL=debug
+    - PUID=${PUID}
+    - PGID=${PGID}
+    - TZ=${TZ}
+    - UMASK=022
+    - LIBVA_DRIVER_NAME=iHD        # ADD THIS - Force iHD driver
+    group_add:                        # ADD THIS SECTION
+    - "44"   # video group
+    - "105"  # render group
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+    ports:
+      - 5055:5055
+    volumes:
+      - /srv/komodo/data/arr/jellyseerr/config:/app/config
+    restart: unless-stopped
+
+##############NETWORKS##############
+networks:
+  default:
+    name: media
+    external: true
+  vpn:
+    name: vpn
+    external: true
