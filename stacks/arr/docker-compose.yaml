@@ -156,6 +156,5 @@ services:
 
 ##############NETWORKS##############
 networks:
-  default:
-    name: media
+  media:
     external: true
