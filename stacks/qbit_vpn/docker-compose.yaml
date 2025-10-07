@@ -46,9 +46,7 @@ services:
     restart: always
 
 networks:
-  default:
-    name: vpn
+  vpn:
     external: true
   media:
-    name: media
     external: true
