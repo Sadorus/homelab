@@ -101,7 +101,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /srv/komodo/data/arr/decluttarr/config:/app/config/config.yaml
+      - /srv/komodo/data/arr/decluttarr/config/config.yaml:/app/config/config.yaml
       # - $DOCKERDIR/appdata/decluttarr/logs:/app/logs # Uncomment to get logs in text file, too
   huntarr:
     image: ghcr.io/plexguide/huntarr:latest
