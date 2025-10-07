@@ -2,16 +2,16 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
+    networks:
+      - media
+      - vpn
     cap_add:
       - NET_ADMIN
     ports:
       - 6881:6881
       - 6881:6881/udp
       - 8085:8085
-      - 8989:8989
-      - 7878:7878
       - 9696:9696
-      - 6767:6767
     volumes:
       - /srv/komodo/data/gluetun:/gluetun
     environment:
@@ -42,10 +42,13 @@ services:
       - WEBUI_PORT=${WEBUI_PORT}
     volumes:
       - /srv/komodo/data/qbit:/config
-      - /mnt/media/torrents:/media
+      - ${MEDIADIR}:/media
     restart: always
 
 networks:
   default:
     name: vpn
+    external: true
+  media:
+    name: media
     external: true
