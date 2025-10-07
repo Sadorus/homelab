@@ -7,6 +7,24 @@ enabled = true
 ##
 
 [[stack]]
+name = "arr"
+[stack.config]
+server = "nas"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/arr"
+file_paths = ["docker-compose.yaml"]
+environment = """
+TZ = [[TZ]]
+PGID = [[PGID]]
+PUID = [[PUID]]
+MEDIADIR = [[MEDIADIR]]
+"""
+
+##
+
+[[stack]]
 name = "beszel"
 [stack.config]
 server = "nas"
@@ -98,6 +116,7 @@ TZ = [[TZ]]
 PGID = [[PGID]]
 PUID = [[PUID]]
 WEBUI_PORT = [[WEBUI_PORT]]
+MEDIADIR = [[MEDIADIR]]
 """
 
 ##
