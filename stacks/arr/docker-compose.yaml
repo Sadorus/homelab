@@ -50,8 +50,6 @@ services:
       - UMASK=022
     volumes:
       - /srv/komodo/data/arr/prowlarr:/config
-    ports:
-      - 9696:9696
 
   bazarr:
     container_name: bazarr
@@ -70,7 +68,7 @@ services:
       - /srv/komodo/data/arr/bazarr:/config
       - $MEDIADIR:/media
     ports:
-      - 6767:6767
+      - "6767:6767"
 
   autobrr:
     container_name: autobrr
@@ -112,7 +110,7 @@ services:
     networks:
       - media
     ports:
-      - "9705:9705"
+      - 9705:9705
     volumes:
       - /srv/komodo/data/arr/huntarr/config:/config
     environment:
