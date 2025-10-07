@@ -16,7 +16,7 @@ services:
       - /srv/komodo/data/arr/radarr:/config
       - $MEDIADIR:/media
     ports:
-      -7878:7878
+      - 7878:7878
   sonarr:
     container_name: sonarr
     image: ghcr.io/hotio/sonarr:latest
@@ -34,7 +34,7 @@ services:
       - /srv/komodo/data/arr/sonarr:/config
       - $MEDIADIR:/media
     ports:
-      -8989:8989
+      - 8989:8989
 
   prowlarr:
     container_name: prowlarr
@@ -51,7 +51,7 @@ services:
     volumes:
       - /srv/komodo/data/arr/prowlarr:/config
     ports:
-      -9696:9696
+      - 9696:9696
 
   bazarr:
     container_name: bazarr
@@ -70,7 +70,7 @@ services:
       - /srv/komodo/data/arr/bazarr:/config
       - $MEDIADIR:/media
     ports:
-      -6767:6767
+      - 6767:6767
 
   autobrr:
     container_name: autobrr
