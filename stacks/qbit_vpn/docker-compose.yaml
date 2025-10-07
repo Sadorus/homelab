@@ -42,7 +42,7 @@ services:
       - WEBUI_PORT=${WEBUI_PORT}
     volumes:
       - /srv/komodo/data/qbit:/config
-      - ${MEDIADIR}:/media
+      - $MEDIADIR:/media
     restart: always
 
 networks:
