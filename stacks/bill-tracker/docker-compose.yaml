@@ -21,8 +21,9 @@ services:
     volumes:
       - /srv/komodo/data/bill-tracker:/app/data
     labels:
-      - "tsdproxy.enable=true"                # Enable this container with TSDProxy
-      - "tsdproxy.name=bill-tracker"                # Set the name in Tailscale
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=bill-tracker"
+      - "tsbridge.service.port=3002"              # Set the name in Tailscale
 
 networks:
   tailnet:

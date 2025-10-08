@@ -1,0 +1,30 @@
+services:
+  tsbridge:
+    image: ghcr.io/jtdowney/tsbridge:latest
+    command: ["--provider", "docker"]
+    container_name: tsbridge
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Access to Docker socket
+      - /srv/komodo/data/tsbridge:/var/lib/tsbridge
+      # - /srv/komodo/data/tsdproxy/data:/data  # Persistent data storage using host folder
+      # - /srv/komodo/data/tsdproxy/config:/config  # Configuration directory using host folder
+      # - /srv/komodo/data/tailscale/socket:/var/run/tailscale  # Access to your Tailscale socket
+    restart: unless-stopped
+    environment:
+      - TS_OAUTH_CLIENT_ID=${TS_OAUTH_CLIENT_ID}
+      - TS_OAUTH_CLIENT_SECRET=${TS_OAUTH_CLIENT_SECRET}
+    ports:
+      - "8080:8080"
+    labels:
+      #- tsdproxy.enable=true  # Enable the dashboard in Tailscale
+      #- tsdproxy.name=dash  # Name for the dashboard in Tailscale
+      - "tsbridge.tailscale.oauth_client_id_env=TS_OAUTH_CLIENT_ID"
+      - "tsbridge.tailscale.oauth_client_secret_env=TS_OAUTH_CLIENT_SECRET"
+      - "tsbridge.tailscale.state_dir=/var/lib/tsbridge"
+      - "tsbridge.tailscale.default_tags=tag:server"  # Must match or be owned by your OAuth client's tag
+    networks:
+      - tailnet
+
+networks:
+  tailnet:
+    external: true
