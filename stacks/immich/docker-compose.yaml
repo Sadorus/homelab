@@ -34,8 +34,9 @@ services:
     security_opt:
       - no-new-privileges:true
     labels:
-      - tsdproxy.enable=true
-      - tsdproxy.name=immich
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=immich"
+      - "tsbridge.service.port=2283"
     networks:
       - tailnet
       - default
