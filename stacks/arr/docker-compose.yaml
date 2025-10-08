@@ -89,20 +89,30 @@ services:
       - /srv/komodo/data/arr/autobrr/config:/config
     ports:
       - 7474:7474
-
-  decluttarr:
-    image: ghcr.io/manimatter/decluttarr:latest
-    container_name: decluttarr
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
     restart: unless-stopped
     networks:
       - media
+    ports:
+      - "11011:11011"
+    volumes:
+      - /srv/komodo/data/arr/cleanuparr/config:/config
     environment:
+      - PORT=11011
+      - BASE_PATH=
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    volumes:
-      - /srv/komodo/data/arr/decluttarr/config/config.yaml:/app/config/config.yaml
-      # - $DOCKERDIR/appdata/decluttarr/logs:/app/logs # Uncomment to get logs in text file, too
+      - UMASK=022
+    # Health check configuration
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
+      interval: 70s        # Check every 30 seconds
+      timeout: 10s         # Allow up to 10 seconds for response
+      start_period: 30s    # Wait 30 seconds before first check
+      retries: 3           # Mark unhealthy after 3 consecutive failures
   huntarr:
     image: ghcr.io/plexguide/huntarr:latest
     container_name: huntarr
