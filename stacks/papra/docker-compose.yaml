@@ -1,0 +1,23 @@
+services:
+  papra:
+    container_name: papra
+    image: ghcr.io/papra-hq/papra:latest
+    restart: unless-stopped
+    ports:
+      - 1221:1221
+    networks:
+      - tailnet
+    labels:
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=papra"
+      - "tsbridge.service.port=1221"
+    environment:
+      - AUTH_SECRET=${AUTH_SECRET} 
+    volumes:
+      - /srv/komodo/data/papra/db:/app/app-data/db
+      - ${PAPRA_UPLOAD_DOCUMENTS}:/app/app-data/documents
+    user: "${PUID}:${PGID}"
+
+networks:
+  tailnet:
+    external: true
