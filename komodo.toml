@@ -98,6 +98,24 @@ DB_DATABASE_NAME = [[DB_DATABASE_NAME]]
 ##
 
 [[stack]]
+name = "papra"
+[stack.config]
+server = "nas"
+poll_for_updates = true
+git_account = "Sadorus"
+repo = "Sadorus/homelab"
+run_directory = "stacks/papra"
+file_paths = ["docker-compose.yaml"]
+environment = """
+PAPRA_UPLOAD_DOCUMENTS = [[PAPRA_UPLOAD_DOCUMENTS]]
+AUTH_SECRET = [[AUTH_SECRET]]
+PUID = [[PUID]]
+PGID = [[PGID]]
+"""
+
+##
+
+[[stack]]
 name = "qbit_vpn"
 [stack.config]
 server = "nas"
