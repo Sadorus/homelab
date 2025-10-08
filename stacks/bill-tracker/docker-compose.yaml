@@ -4,8 +4,6 @@ services:
     image: sadorus/bill-tracker:latest
     container_name: bill-tracker
     restart: unless-stopped
-    ports:
-      - "3000:3002"  # Map host port 3000 to container port 3002
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
