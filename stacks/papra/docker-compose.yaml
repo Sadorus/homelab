@@ -13,7 +13,7 @@ services:
       - "tsbridge.service.port=1221"
     environment:
       - AUTH_SECRET=${AUTH_SECRET}
-      - APP_BASE_URL=${PAPRA_BASE_URL}
+      - APP_BASE_URL=${APP_BASE_URL}
     volumes:
       - /srv/komodo/data/papra/db:/app/app-data/db
       - ${PAPRA_UPLOAD_DOCUMENTS}:/app/app-data/documents
