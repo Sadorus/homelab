@@ -113,20 +113,6 @@ services:
       timeout: 10s         # Allow up to 10 seconds for response
       start_period: 30s    # Wait 30 seconds before first check
       retries: 3           # Mark unhealthy after 3 consecutive failures
-  huntarr:
-    image: ghcr.io/plexguide/huntarr:latest
-    container_name: huntarr
-    restart: always
-    networks:
-      - media
-    ports:
-      - 9705:9705
-    volumes:
-      - /srv/komodo/data/arr/huntarr/config:/config
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
