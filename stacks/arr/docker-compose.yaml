@@ -116,6 +116,10 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
+    labels:
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=jellyfin"
+      - "tsbridge.service.port=8096"
     networks:
       - media
     ports:
@@ -142,6 +146,10 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
+    labels:
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=jellyseerr"
+      - "tsbridge.service.port=5055"
     networks:
       - media
     environment:
