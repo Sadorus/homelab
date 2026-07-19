@@ -122,6 +122,7 @@ services:
       - "tsbridge.service.port=8096"
     networks:
       - media
+      - tailnet
     ports:
       - 8096:8096
     volumes:
@@ -152,6 +153,7 @@ services:
       - "tsbridge.service.port=5055"
     networks:
       - media
+      - tailnet
     environment:
       - LOG_LEVEL=debug
       - PUID=${PUID}
@@ -167,4 +169,6 @@ services:
 ##############NETWORKS##############
 networks:
   media:
+    external: true
+  tailnet:
     external: true
