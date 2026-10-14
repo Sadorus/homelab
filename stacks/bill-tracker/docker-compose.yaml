@@ -28,6 +28,8 @@ services:
     image: adrianmusante/pocketbase:latest
     container_name: bill-tracker-pocketbase
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:8091:8090" 
     environment:
       - POCKETBASE_ADMIN_EMAIL=${POCKETBASE_ADMIN_EMAIL:-}
       - POCKETBASE_ADMIN_PASSWORD=${POCKETBASE_ADMIN_PASSWORD:-}
