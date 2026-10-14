@@ -49,14 +49,12 @@ services:
       #   chown -R 1001:1001 /srv/komodo/data/bill-tracker/pocketbase
       - ${PB_DATA_DIR:-/srv/komodo/data/bill-tracker/pocketbase}:/pocketbase
       # Schema and reminder hook, read-only — PocketBase only ever reads
-      # these, and they matter only at boot (migrations apply once, into
-      # pb_data). Absolute paths on purpose: Komodo materializes only the
-      # files it tracks — the compose file — so a checkout-relative path
-      # here is an empty directory. Copy them into the data area once:
-      #   git clone --depth 1 https://github.com/Sadorus/homelab /tmp/h
-      #   sudo cp -rT /tmp/h/stacks/bill-tracker/pb_migrations /srv/komodo/data/bill-tracker/pb_migrations
-      #   sudo cp -rT /tmp/h/stacks/bill-tracker/pb_hooks     /srv/komodo/data/bill-tracker/pb_hooks
-      #   sudo chmod -R a+rX /srv/komodo/data/bill-tracker/pb_{migrations,hooks}
+      # these. The defaults find them inside a bill_reminder clone; when this
+      # file lives in the homelab repo with the folders copied next to it,
+      # set in the stack environment (a .env beside the compose file or the
+      # Komodo stack's `environment`):
+      #   PB_MIGRATIONS_DIR=./pb_migrations
+      #   PB_HOOKS_DIR=./pb_hooks
       - /srv/komodo/data/bill-tracker/pb_migrations:/pocketbase/migrations:ro
       - /srv/komodo/data/bill-tracker/pb_hooks:/pocketbase/hooks:ro
     healthcheck:
