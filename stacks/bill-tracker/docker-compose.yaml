@@ -8,6 +8,7 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
+      - POCKETBASE_URL=${POCKETBASE_URL:-} 
     networks:
       - tailnet
     # Deliberately no depends_on: the app is client-side and needs nothing
@@ -28,8 +29,6 @@ services:
     image: adrianmusante/pocketbase:latest
     container_name: bill-tracker-pocketbase
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8091:8090" 
     environment:
       - POCKETBASE_ADMIN_EMAIL=${POCKETBASE_ADMIN_EMAIL:-}
       - POCKETBASE_ADMIN_PASSWORD=${POCKETBASE_ADMIN_PASSWORD:-}
