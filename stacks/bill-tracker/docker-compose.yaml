@@ -1,34 +1,78 @@
 services:
   bill-reminder:
-    # Use your published Docker Hub image
     image: sadorus/bill-tracker:latest
     container_name: bill-tracker
     restart: unless-stopped
     ports:
-      - "3000:3002"  # Map host port 3000 to container port 3002
+      - "3000:3002" # host 3000 -> the app's port 3002 inside the container
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
     networks:
       - tailnet
+    # Deliberately no depends_on: the app is client-side and needs nothing
+    # from PocketBase at boot, so a PocketBase problem leaves the app up
+    # (degraded) instead of taking the whole stack down.
     healthcheck:
-      # Updated health check to use the correct API endpoint on port 3002
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-    volumes:
-      - /srv/komodo/data/bill-tracker:/app/data
     labels:
       - "tsbridge.enabled=true"
       - "tsbridge.service.name=bill-tracker"
-      - "tsbridge.service.port=3002"              # Set the name in Tailscale
+      - "tsbridge.service.port=3002"
+
+  pocketbase:
+    image: adrianmusante/pocketbase:latest
+    container_name: bill-tracker-pocketbase
+    restart: unless-stopped
+    environment:
+      - POCKETBASE_ADMIN_EMAIL=${POCKETBASE_ADMIN_EMAIL:-}
+      - POCKETBASE_ADMIN_PASSWORD=${POCKETBASE_ADMIN_PASSWORD:-}
+      # Encrypt settings (SMTP credentials, OAuth secrets) at rest:
+      # - POCKETBASE_ENCRYPTION_KEY=${POCKETBASE_ENCRYPTION_KEY}
+      # Email reminders: SMTP lives in the Admin UI; these only move or
+      # disable the daily job (docs/email-reminders.md):
+      # - PB_REMINDERS_CRON=0 8 * * *
+      # - PB_REMINDERS_TZ=Local
+      # - PB_REMINDERS_DISABLED=1
+    networks:
+      - tailnet
+    volumes:
+      # The whole PocketBase workdir: database, backups, settings.
+      # PB_DATA_DIR defaults to the homelab data convention; create it and
+      # give it to the container user first (the image runs as uid 1001):
+      #   mkdir -p /srv/komodo/data/bill-tracker/pocketbase
+      #   chown -R 1001:1001 /srv/komodo/data/bill-tracker/pocketbase
+      - ${PB_DATA_DIR:-/srv/komodo/data/bill-tracker/pocketbase}:/pocketbase
+      # Schema and reminder hook, read-only — PocketBase only ever reads
+      # these. The defaults find them inside a bill_reminder clone; when this
+      # file lives in the homelab repo with the folders copied next to it,
+      # set in the stack environment (a .env beside the compose file or the
+      # Komodo stack's `environment`):
+      #   PB_MIGRATIONS_DIR=./pb_migrations
+      #   PB_HOOKS_DIR=./pb_hooks
+      - ${PB_MIGRATIONS_DIR:-./pocketbase/pb_migrations}:/pocketbase/migrations:ro
+      - ${PB_HOOKS_DIR:-./pocketbase/pb_hooks}:/pocketbase/hooks:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "tsbridge.enabled=true"
+      - "tsbridge.service.name=bill-tracker-pb"
+      - "tsbridge.service.port=8090"
+    security_opt:
+      - no-new-privileges:true
+
+# Uncomment when using the named-volume alternative above:
+# volumes:
+#   pb_data:
 
 networks:
   tailnet:
     external: true
-
-# Uncomment if you need persistent storage
-# volumes:
-#   bill-reminder-data:
